@@ -1,0 +1,65 @@
+{% extends "base.inc" %}
+{% block title %}Boarding details - {{ boarding_process.device.serial }}{% endblock %}
+{% block content %}
+<h1>Boarding Process Details</h1>
+<div class="row">
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-3">Device serial number</div>
+      <div class="col-md-6">{{ boarding_process.device.serial }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Device IP address</div>
+        <div class="col-md-6">{{ boarding_process.device.address }}</div>
+    </div>
+    {% if boarding_process.device.hostname %}
+    <div class="row">
+        <div class="col-md-3">Device Hostname</div>
+        <div class="col-md-6">{{ boarding_process.device.hostname }}</div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-3">Netbox device ID</div>
+        
+        <div class="col-md-6">
+            {% if boarding_process.netbox_device_id %}
+            <a target="_blank" href="{{ netbox_url }}/dcim/devices/{{ boarding_process.netbox_device_id }}">{{ boarding_process.netbox_device_id }}</a>
+            {% else %}
+            None
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Boarding status</div>
+        <div class="col-md-6">{{ boarding_process.status }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Process created</div>
+        <div class="col-md-6">{{ boarding_process.date_created }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Process modified</div>
+        <div class="col-md-6">{{ boarding_process.date_modified }}</div>
+    </div>
+    {% if boarding_process.comment %}
+    <div class="row">
+        <div class="col-md-3">Comment</div>
+        <div class="col-md-6">{{ boarding_process.comment }}</div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col">
+            {% if boarding_process.status == "MATCH"%}
+            <a class="btn btn-success" href="/boarding/approve/{{ boarding_process.id }}" role="button">Approve</a>
+            <a class="btn btn-danger" href="/boarding/deny/{{ boarding_process.id }}" role="button">Deny</a>
+            {% endif %}
+            {% if boarding_process.status == "NEW"%}
+            <a class="btn btn-info" href="/boarding/lookup/{{ boarding_process.device.id }}" role="button">Netbox match lookup</a>
+            <a class="btn btn-danger" href="/boarding/delete/{{ boarding_process.id }}" role="button">Delete device</a>
+            {% endif %}
+            <a class="btn btn-secondary" href="/" role="button">Return to list view</a>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock%}
