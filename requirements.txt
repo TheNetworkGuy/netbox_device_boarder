@@ -2,6 +2,7 @@ asgiref==3.7.2
 certifi==2023.7.22
 charset-normalizer==3.2.0
 Django==4.2.3
+django-environ==0.11.2
 idna==3.4
 pynetbox==7.0.1
 requests==2.31.0

@@ -7,8 +7,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, DetailView
 import json
 import pynetbox
+import environ
 
-from .netbox_config import netbox_url, netbox_token
+# Import Netbox variables
+env = environ.Env()
+environ.Env.read_env()
+netbox_url = env("NETBOX_URL")
+netbox_token = env("NETBOX_TOKEN")
+
 nb = pynetbox.api(netbox_url, token=netbox_token)
 
 # Create your views here.
